@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum Proxy</title>
+    <style>
+        body { margin: 0; padding: 20px; font-family: Arial, sans-serif; }
+        #content { width: 100%; min-height: 500px; }
+        .loading { text-align: center; padding: 50px; color: #666; }
+        .error { text-align: center; padding: 50px; color: #red; }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <div class="loading">Loading forum content...</div>
+    </div>
+
+    <script>
+        async function loadForum() {
+            try {
+                const proxyUrl = '/.netlify/functions/proxy?url=' + encodeURIComponent('https://forums.jtechforums.org');
+                const response = await fetch(proxyUrl);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to load forum');
+                }
+                
+                const html = await response.text();
+                document.getElementById('content').innerHTML = html;
+            } catch (error) {
+                document.getElementById('content').innerHTML = 
+                    '<div class="error">Error loading forum: ' + error.message + '</div>';
+                console.error('Error:', error);
+            }
+        }
+        
+        loadForum();
+    </script>
+</body>
+</html>
