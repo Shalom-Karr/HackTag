@@ -19,7 +19,7 @@
     <script>
         async function loadForum() {
             try {
-                const proxyUrl = '/.netlify/functions/proxy?url=' + encodeURIComponent('https://forums.jtechforums.org');
+                const proxyUrl = '/.netlify/functions/proxy?url=' + encodeURIComponent('https://forums.jtechforums.org/leaderboard/6');
                 const response = await fetch(proxyUrl);
                 
                 if (!response.ok) {
